@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: antigravity-voice-cloud
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 server.py
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: PORT
+        value: 10000
+      - key: TELEGRAM_BOT_TOKEN
+        value: "8965653104:AAFfye3yaVWJGJTHjUVUs1NFj_OJz7C7Xig"
+      - key: TELEGRAM_USER_ID
+        value: "8069526508"

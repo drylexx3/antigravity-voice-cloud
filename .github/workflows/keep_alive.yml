@@ -1,0 +1,21 @@
+name: 24/7 Keep-Alive Pinger
+
+on:
+  schedule:
+    # Run every 10 minutes to prevent free cloud instances from sleeping
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Cloud Voice Bridge Health
+        run: |
+          TARGET_URL="${{ secrets.CLOUD_APP_URL }}"
+          if [ -n "$TARGET_URL" ]; then
+            echo "Pinging $TARGET_URL/health ..."
+            curl -s -f "$TARGET_URL/health" || echo "Ping returned status, cloud awake."
+          else
+            echo "Notice: Set CLOUD_APP_URL in GitHub Repo Settings -> Secrets to keep your cloud service awake."
+          fi
